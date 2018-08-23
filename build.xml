@@ -39,10 +39,21 @@ SOFTWARE.
     <property name="awh.hamcrest.jar" location="lib/hamcrest-core-1.3.jar" />
     <property name="awh.hamcrest.url" value="http://search.maven.org/remotecontent?filepath=org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar" />
     <property name="awh.hamcrest.checksum" value="66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9" />
+    <property name="awh.jcodec.jar" value="lib/jcodec-0.2.3.jar" />
+    <property name="awh.jcodec.url" value="http://central.maven.org/maven2/org/jcodec/jcodec/0.2.3/jcodec-0.2.3.jar" />
+    <property name="awh.jcodec.checksum" value="e07abdd06f4cf3356a9490e132035dbbb5bfad1a6a602126d1a4686a762ecb7e" />
+    <property name="awh.jcodec.javase.jar" location="lib/jcodec-javase-0.2.3.jar" />
+    <property name="awh.jcodec.javase.url" value="http://central.maven.org/maven2/org/jcodec/jcodec-javase/0.2.3/jcodec-javase-0.2.3.jar" />
+    <property name="awh.jcodec.javase.checksum" value="4166c8279f9901c9ab68c46ebec7e58a139b80f2a1ab0f381b6b7cf9b835e124" />
         
         
     <property name="awh.lib.jar" location="out/jar/awh-${awh.version}.jar" />
-    
+
+    <path id="awh.extra.libs.classpath">
+        <pathelement path="${awh.jcodec.jar}" />
+        <pathelement path="${awh.jcodec.javase.jar}" />
+    </path>
+
     <!-- Retrive file from given URL and check its checksum (SHA-256). -->
     <macrodef name="get-and-check">
       <attribute name="url" />
@@ -64,11 +75,12 @@ SOFTWARE.
     <target name="main" depends="make-lib" description="Default target: create library JAR.">
     </target>
 
-    <target name="compile-lib" description="Compile GIF encoding Java library.">
+    <target name="compile-lib" description="Compile GIF encoding Java library." depends="fetch-jcodec">
         <mkdir dir="out/classes-lib" />
         <javac destdir="out/classes-lib" debug="true" includeantruntime="false">
             <src path="src/java" />
             <compilerarg value="-Xlint:all" />
+            <classpath refid="awh.extra.libs.classpath" />
         </javac>
     </target>
 
@@ -88,6 +100,7 @@ SOFTWARE.
                 <pathelement path="${awh.junit.jar}" />
                 <pathelement path="${awh.hamcrest.jar}" />
             </classpath>
+            <classpath refid="awh.extra.libs.classpath" />
             <compilerarg value="-Xlint:all" />
         </javac>
     </target>
@@ -131,6 +144,7 @@ SOFTWARE.
         <mkdir dir="out/javadoc" />
         <javadoc destdir="out/javadoc" author="true" version="true" use="true" failonerror="true" overview="src/java/overview.html" windowtitle="${ant.project.name}">
             <packageset dir="src/java" defaultexcludes="yes" />
+            <classpath refid="awh.extra.libs.classpath" />
             <doctitle>&lt;h1&gt;Alisma wrappers-and-helpers&lt;/h1&gt;</doctitle>
             <bottom>&lt;i&gt;Copyright &amp;copy; 2018 Vojtech Horky --&lt;/i&gt;</bottom>
         </javadoc>
@@ -158,9 +172,14 @@ SOFTWARE.
         <delete dir="out/" />
     </target>
     
-    <target name="fetch" description="Download needed JARs" depends="fetch-checkstyle,fetch-junit">
+    <target name="fetch" description="Download needed JARs" depends="fetch-checkstyle,fetch-junit,fetch-jcodec">
     </target>
-    
+
+    <target name="fetch-jcodec">
+        <get-and-check dest="${awh.jcodec.jar}" url="${awh.jcodec.url}" checksum="${awh.jcodec.checksum}" />
+        <get-and-check dest="${awh.jcodec.javase.jar}" url="${awh.jcodec.javase.url}" checksum="${awh.jcodec.javase.checksum}" />
+    </target>
+
     <target name="fetch-checkstyle">
         <get-and-check dest="${awh.checkstyle.jar}" url="${awh.checkstyle.url}" checksum="${awh.checkstyle.checksum}" />
     </target>
