@@ -92,6 +92,14 @@ public final class Image {
         return new Image(image);
     }
     
+    /** Create a copy of this image.
+     *
+     * @return Copy of this image.
+     */
+    public Image copy() {
+        return new Image(recreateImage(backend, BufferedImage.TYPE_INT_ARGB));
+    }
+
     /** Tell image width.
      * 
      * @return Image width in pixels.
@@ -133,6 +141,16 @@ public final class Image {
         backend.setRGB(x, y, color.toMergedRgb());
     }
     
+    /** Get image as BufferedImage from awt package.
+     *
+     * @return Reference (not copy!) of the backend image.
+     */
+    // Note that this is package-private method to allow acess from Movie class
+    // but not by end-users.
+    BufferedImage getAsAwtImageUnsafe() {
+        return backend;
+    }
+
     /** Rescale image to new size.
      *
      * @param newWidth New width (in pixels).
@@ -195,7 +213,7 @@ public final class Image {
      * @param type New type (see constructor of BufferedImage class for available types).
      * @return Converted image.
      */
-    private BufferedImage recreateImage(final java.awt.Image im, final int type) {
+    private static BufferedImage recreateImage(final java.awt.Image im, final int type) {
         BufferedImage res = new BufferedImage(im.getWidth(null), im.getHeight(null), type);
         Graphics2D gr = res.createGraphics();
         gr.drawImage(im, 0, 0, null);
