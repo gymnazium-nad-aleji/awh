@@ -187,4 +187,9 @@ public final class Color {
     public String toHtmlNotation() {
         return String.format("#%02x%02x%02x", red, green, blue);
     }
+
+    @Override
+    public String toString() {
+        return String.format("#%02x%02x%02x%02x", red, green, blue, alpha);
+    }
 }
