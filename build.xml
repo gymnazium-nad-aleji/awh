@@ -49,6 +49,7 @@ SOFTWARE.
       <attribute name="dest" />
       <attribute name="checksum" />
       <sequential>
+        <local name="checksum.matches"/>
         <get dest="@{dest}" src="@{url}" usetimestamp="true" skipexisting="true" />
         <checksum file="@{dest}" algorithm="sha-256" property="@{checksum}" verifyProperty="checksum.matches"/>
         <fail message="Invalid checksum for @{dest}.">
