@@ -83,6 +83,9 @@ public final class Color {
     /** Blue component in 0 to 255 range. */
     private int blue;
     
+    /** Transparency in 0 to 255 range, 0 being fully transparent. */
+    private int alpha;
+
     /** Constructor from RGB components.
      * 
      * @param r Red component in 0 to 255 range (inclusive).
@@ -90,17 +93,30 @@ public final class Color {
      * @param b Blue component in 0 to 255 range (inclusive).
      */
     public Color(final int r, final int g, final int b) {
+        this(r, g, b, 255);
+    }
+
+    /** Constructor from RGBA components.
+     *
+     * @param r Red component in 0 to 255 range (inclusive).
+     * @param g Green component in 0 to 255 range (inclusive).
+     * @param b Blue component in 0 to 255 range (inclusive).
+     * @param a Alpha component in 0 to 255 range (inclusive), 0 being fully transparent.
+     */
+    public Color(final int r, final int g, final int b, final int a) {
         Problem.whenNotInRange("red component", r, 0, 256);
         Problem.whenNotInRange("green component", g, 0, 256);
         Problem.whenNotInRange("blue component", b, 0, 256);
+        Problem.whenNotInRange("alpha component", a, 0, 256);
         
         red = r;
         green = g;
         blue = b;
+        alpha = a;
     }
-    
+
     /** Create color from RGB components.
-     * 
+     *
      * @param r Red component in 0 to 255 range (inclusive).
      * @param g Green component in 0 to 255 range (inclusive).
      * @param b Blue component in 0 to 255 range (inclusive).
@@ -119,7 +135,8 @@ public final class Color {
         return new Color(
                 (rgb & 0x00ff0000) >> 16,
                 (rgb & 0x0000ff00) >> 8,
-                (rgb & 0x000000ff) >> 0
+                (rgb & 0x000000ff) >> 0,
+                (((rgb & 0xff000000) >> 24) + 256) % 256
         );
     }
     
@@ -152,7 +169,7 @@ public final class Color {
      * @return Color as single integer, each RGB component occupies one byte.
      */
     public int toMergedRgb() {
-        return (red << 16) | (green << 8) | blue;
+        return (alpha << 24) | (red << 16) | (green << 8) | blue;
     }
 
     /** Convert to awt package representation.
