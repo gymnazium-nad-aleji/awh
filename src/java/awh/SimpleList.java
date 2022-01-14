@@ -113,7 +113,25 @@ class SimpleList<E extends Comparable<? super E>> implements Iterable<E> {
     public void sort() {
         Collections.sort(backend);
     }
-    
+
+    /** Get maximum value in the list.
+     *
+     * @return Maximum value.
+     * @throws Problem When list is empty.
+     */
+    public E max() {
+        if (isEmpty()) {
+            throw new Problem("Cannot find maximum for empty list");
+        }
+        int maxIndex = 0;
+        for (int i = 1; i < size(); i++) {
+            if (get(i).compareTo(get(maxIndex)) > 0) {
+                maxIndex = i;
+            }
+        }
+        return get(maxIndex);
+    }
+
     /** Reverse order of elements in the list (in place). */
     public void reverse() {
         Collections.reverse(backend);

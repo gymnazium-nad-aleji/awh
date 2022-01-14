@@ -105,4 +105,9 @@ public class SimpleListTest {
     public void joinOnEmpty() {
         Assert.assertEquals("", empty.join(","));
     }
+
+    @Test
+    public void getMaximum() {
+        Assert.assertEquals("Z", unorderedLetters.max());
+    }
 }
