@@ -31,7 +31,9 @@ import org.junit.Assert;
 public class SimpleListTest {
     private SimpleList<String> alphabet;
     private final SimpleList<String> empty = new SimpleList<>();
-    
+    private SimpleList<String> unorderedLetters;
+
+
     @Before
     public void setUp() {
         alphabet = new SimpleList<>();
@@ -40,6 +42,14 @@ public class SimpleListTest {
         alphabet.add("C");
         alphabet.add("D");
         alphabet.add("E");
+
+        unorderedLetters = new SimpleList<>();
+        unorderedLetters.add("A");
+        unorderedLetters.add("M");
+        unorderedLetters.add("B");
+        unorderedLetters.add("Z");
+        unorderedLetters.add("Q");
+
     }
     
     @Test
@@ -66,7 +76,31 @@ public class SimpleListTest {
     public void joinWorks() {
         Assert.assertEquals("A,B,C,D,E", alphabet.join(","));
     }
-    
+
+    @Test
+    public void setFirstElement() {
+        Assert.assertEquals("A", alphabet.set(0, "X"));
+        Assert.assertEquals("X", alphabet.get(0));
+    }
+
+    @Test
+    public void setLastElement() {
+        Assert.assertEquals("E", alphabet.set(4, "X"));
+        Assert.assertEquals("X", alphabet.get(4));
+    }
+
+    @Test
+    public void setFirstElementBackwards() {
+        Assert.assertEquals("A", alphabet.set(-5, "X"));
+        Assert.assertEquals("X", alphabet.get(0));
+    }
+
+    @Test
+    public void setLastElementBackwards() {
+        Assert.assertEquals("E", alphabet.set(-1, "X"));
+        Assert.assertEquals("X", alphabet.get(4));
+    }
+
     @Test
     public void joinOnEmpty() {
         Assert.assertEquals("", empty.join(","));

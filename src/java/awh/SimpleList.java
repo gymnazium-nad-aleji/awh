@@ -85,6 +85,24 @@ class SimpleList<E extends Comparable<? super E>> implements Iterable<E> {
         
         return backend.get(positiveIndex);
     }
+
+    /** Set element at the specified position in the list.
+     *
+     * <p>
+     * For positive indices, count from beginning of the list (as with normal lists).
+     * For negative indices, count from end of the list (-1 is the last element).
+     *
+     * @param index Position (zero based).
+     * @param newValue New value to be set.
+     * @return Previous element at given index.
+     */
+    public E set(final int index, final E newValue) {
+        Problem.whenNotInRange(this.getClass().getName() + " index", index, -size(), size());
+
+        int positiveIndex = index >= 0 ? index : size() + index;
+
+        return backend.set(positiveIndex, newValue);
+    }
     
     /** Removes all elements from the list.  */
     public void clear() {
