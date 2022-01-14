@@ -25,12 +25,12 @@ package awh;
 
 /** List of doubles. */
 public class DoubleList extends SimpleList<Double> {
-    
+
     /** Default constructor. */
     public DoubleList() {}
 
     /** Create list of doubles and populate it with initial values.
-     * 
+     *
      * @param values Initial values.
      * @return Populated list of doubles.
      */

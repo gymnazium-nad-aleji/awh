@@ -47,12 +47,12 @@ public class SysTest_getFileExtension {
 
     private final String expectedExtension;
     private final String actualFilename;
-    
+
     public SysTest_getFileExtension(String extension, String filename) {
         expectedExtension = extension;
         actualFilename = filename;
     }
-    
+
     @Test
     public void test() {
         Assert.assertEquals(expectedExtension, Sys.getFileExtension(actualFilename));

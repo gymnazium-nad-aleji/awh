@@ -29,7 +29,7 @@ public class Problem extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     /** Constructor with message.
-     * 
+     *
      * @param format printf-like format describing the exception.
      * @param args Arguments to format.
      */
@@ -38,7 +38,7 @@ public class Problem extends RuntimeException {
     }
 
     /** Throws when value is out of range.
-     * 
+     *
      * @param valueName Name of the value that is being checked (such as coordinate).
      * @param value Actual value to be checked.
      * @param minInclusive Minimal value (inclusive).
@@ -52,9 +52,9 @@ public class Problem extends RuntimeException {
                     valueName, value, minInclusive, maxExclusive);
         }
     }
-    
+
     /** Throws when value is null.
-     * 
+     *
      * @param value Value to be checked for nullity.
      * @param name Name of the value that is being checked.
      * @throws Problem When value is null.

@@ -40,7 +40,7 @@ public final class Image {
      * your program.
      */
     private static final int MAX_DIMENSION = Short.MAX_VALUE;
-    
+
     /** Actual image. */
     private BufferedImage backend;
 
@@ -51,7 +51,7 @@ public final class Image {
     private Image(final BufferedImage im) {
         backend = im;
     }
-    
+
     /** Load image from file on disk.
      *
      * @param path Path to the file.
@@ -60,7 +60,7 @@ public final class Image {
      */
     public static Image loadFromFile(final String path) {
         Problem.whenNull(path, "image path");
-        
+
         BufferedImage image;
         try {
             image = ImageIO.read(new File(path));
@@ -70,7 +70,7 @@ public final class Image {
         }
         return new Image(image);
     }
-    
+
     /** Create empty image.
      *
      * @param width Width of new image in pixels.
@@ -81,17 +81,17 @@ public final class Image {
     public static Image createEmpty(final int width, final int height, final Color bg) {
         Problem.whenNull(bg, "background color");
         checkDimensions(width, height);
-        
+
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        
+
         Graphics2D gr = image.createGraphics();
         gr.setBackground(bg.toAwtColor());
         gr.clearRect(0, 0, width, height);
         gr.dispose();
-        
+
         return new Image(image);
     }
-    
+
     /** Create a copy of this image.
      *
      * @return Copy of this image.
@@ -101,7 +101,7 @@ public final class Image {
     }
 
     /** Tell image width.
-     * 
+     *
      * @return Image width in pixels.
      */
     public int getWidth() {
@@ -124,7 +124,7 @@ public final class Image {
      */
     public Color getPixel(final int x, final int y) {
         checkPosition(x, y);
-        
+
         return Color.fromMergedRgb(backend.getRGB(x, y));
     }
 
@@ -137,10 +137,10 @@ public final class Image {
     public void setPixel(final int x, final int y, final Color color) {
         checkPosition(x, y);
         Problem.whenNull(color, "new pixel color");
-        
+
         backend.setRGB(x, y, color.toMergedRgb());
     }
-    
+
     /** Get image as BufferedImage from awt package.
      *
      * @return Reference (not copy!) of the backend image.
@@ -158,7 +158,7 @@ public final class Image {
      */
     public void rescale(final int newWidth, final int newHeight) {
         checkDimensions(newWidth, newHeight);
-        
+
         java.awt.Image rescaled = backend.getScaledInstance(newWidth, newHeight,
                 java.awt.Image.SCALE_SMOOTH);
         if (rescaled instanceof BufferedImage) {
@@ -177,7 +177,7 @@ public final class Image {
     public void pasteFrom(final Image other, final int x, final int y) {
         checkPosition(x, y);
         Problem.whenNull(backend, "image to be pasted");
-        
+
         Graphics2D gr = backend.createGraphics();
         gr.drawImage(other.backend, x, y, null);
         gr.dispose();
@@ -193,7 +193,7 @@ public final class Image {
      */
     public void saveToFile(final String path) {
         Problem.whenNull(path, "file path");
-        
+
         String format = determineImageFormatFromFilename(path);
         try {
             BufferedImage toSave = backend;
@@ -206,7 +206,7 @@ public final class Image {
                     path, format, e.getMessage());
         }
     }
-    
+
     /** Convert existing image to a new type.
      *
      * @param im Image to be converted.
@@ -220,7 +220,7 @@ public final class Image {
         gr.dispose();
         return res;
     }
-    
+
     /** Determine image format from a filename.
      *
      * @param path File path.
@@ -254,7 +254,7 @@ public final class Image {
         Problem.whenNotInRange("x coordinate", x, 0, getWidth());
         Problem.whenNotInRange("y coordinate", y, 0, getHeight());
     }
-    
+
     /** Check that given dimensions are valid.
      *
      * @param width Image width.

@@ -51,27 +51,27 @@ public class SimpleListTest {
         unorderedLetters.add("Q");
 
     }
-    
+
     @Test
     public void getFirstElement() {
        Assert.assertEquals("A", alphabet.get(0));
     }
-    
+
     @Test
     public void getLastElement() {
        Assert.assertEquals("E", alphabet.get(4));
     }
-    
+
     @Test
     public void getLastElementBackwards() {
         Assert.assertEquals("E", alphabet.get(-1));
     }
-    
+
     @Test
     public void getFirstElementBackwards() {
         Assert.assertEquals("A", alphabet.get(-5));
     }
-    
+
     @Test
     public void joinWorks() {
         Assert.assertEquals("A,B,C,D,E", alphabet.join(","));

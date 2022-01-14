@@ -28,7 +28,7 @@ import java.nio.file.Paths;
 
 /** System utilities. */
 public final class Sys {
-    
+
     /** Prevent instantiation. */
     private Sys() {}
 
@@ -52,15 +52,15 @@ public final class Sys {
         System.out.println();
         System.exit(status);
     }
-    
+
     /** Get file extensions from file path.
-     * 
+     *
      * @param filepath Relative or absolute file path.
      * @return File extension (last if multiple present).
      */
     public static String getFileExtension(final String filepath) {
         Problem.whenNull(filepath, "file path cannot be null");
-        
+
         Path name = Paths.get(filepath).getFileName();
         if (name == null) {
             throw new Problem("Path '%s' does not contain last element.", filepath);

@@ -37,18 +37,18 @@ public class InvertImageColors {
         if (args.length != 2) {
             awh.Sys.die("Run with input-filename output-filename arguments.");
         }
-        
+
         awh.Image image = awh.Image.loadFromFile(args[0]);
         int width = image.getWidth();
         int height = image.getHeight();
-        
+
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 awh.Color original = image.getPixel(x, y);
                 image.setPixel(x, y, invertColor(original));
             }
         }
-        
+
         image.saveToFile(args[1]);
     }
 }

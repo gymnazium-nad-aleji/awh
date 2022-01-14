@@ -25,12 +25,12 @@ package awh;
 
 /** List of integers. */
 public class IntList extends SimpleList<Integer> {
-    
+
     /** Default constructor. */
     public IntList() {}
 
     /** Create list of integers and populate it with initial values.
-     * 
+     *
      * @param values Initial values.
      * @return Populated list of integers.
      */

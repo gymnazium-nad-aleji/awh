@@ -39,36 +39,36 @@ import java.util.List;
 class SimpleList<E extends Comparable<? super E>> implements Iterable<E> {
     /** Actual implementation behind this wrapper. */
     private final List<E> backend = new ArrayList<>();
-    
+
     /** Default constructor. */
     SimpleList() {}
-    
+
     /** Append value to the end of the list.
-     * 
+     *
      * @param value Value to append.
      */
     public void add(final E value) {
         Problem.whenNull(value, "element that is added");
-        
+
         backend.add(value);
     }
-    
+
     /** Tell number of elements in the list.
-     * 
+     *
      * @return Number of elements in the list.
      */
     public int size() {
         return backend.size();
     }
-    
+
     /** Tell whether there are no elements in the list.
-     * 
+     *
      * @return True when no elements are present in the list.
      */
     public boolean isEmpty() {
         return backend.isEmpty();
     }
-    
+
     /** Return element at the specified position in the list.
      *
      * <p>
@@ -80,9 +80,9 @@ class SimpleList<E extends Comparable<? super E>> implements Iterable<E> {
      */
     public E get(final int index) {
         Problem.whenNotInRange(this.getClass().getName() + " index", index, -size(), size());
-        
+
         int positiveIndex = index >= 0 ? index : size() + index;
-        
+
         return backend.get(positiveIndex);
     }
 
@@ -103,12 +103,12 @@ class SimpleList<E extends Comparable<? super E>> implements Iterable<E> {
 
         return backend.set(positiveIndex, newValue);
     }
-    
+
     /** Removes all elements from the list.  */
     public void clear() {
         backend.clear();
     }
-    
+
     /** Naturally sorts the elements in the list (in place). */
     public void sort() {
         Collections.sort(backend);
@@ -136,12 +136,12 @@ class SimpleList<E extends Comparable<? super E>> implements Iterable<E> {
     public void reverse() {
         Collections.reverse(backend);
     }
-    
+
     /** Randomly shuffles elements of the list (in place). */
     public void shuffle() {
         Collections.shuffle(backend);
     }
-    
+
     /** Stringify elements of the list and join them.
      *
      * @param delim Delimiter between individual elements.
@@ -149,21 +149,21 @@ class SimpleList<E extends Comparable<? super E>> implements Iterable<E> {
      */
     public String join(final String delim) {
         Problem.whenNull(delim, "separator");
-        
+
         if (isEmpty()) {
             return "";
         }
-        
+
         StringBuilder res = new StringBuilder();
         for (E e : backend) {
             res.append(e.toString());
             res.append(delim);
         }
         res.delete(res.length() - delim.length(), res.length());
-        
+
         return res.toString();
     }
-    
+
     /** Create printable form of this list.
      *
      * <p>
@@ -176,7 +176,7 @@ class SimpleList<E extends Comparable<? super E>> implements Iterable<E> {
     public String toString() {
         return String.format("[%s]", join(","));
     }
-    
+
     /** Checks for equality of two lists.
      *
      * @param obj Other object to compare with.
@@ -187,12 +187,12 @@ class SimpleList<E extends Comparable<? super E>> implements Iterable<E> {
         if ((obj == null) || !(obj instanceof SimpleList)) {
             return false;
         }
-        
+
         @SuppressWarnings("unchecked")
         SimpleList<E> other = (SimpleList<E>) obj;
         return backend.equals(other.backend);
     }
-    
+
     /** Compute hash code of this list.
      *
      * @return Hash code of this list.
